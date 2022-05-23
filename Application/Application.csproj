@@ -1,10 +1,8 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
-
-  <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
-	
-  </PropertyGroup>
+<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<TargetFramework>net5.0</TargetFramework>
+	</PropertyGroup>
 	<ItemGroup>
-	<ProjectReference Include="../Infrastruktura/infrastruktura.csproj" />
+		<ProjectReference Include="../Infrastruktura/infrastruktura.csproj"/>
 	</ItemGroup>
 </Project>
