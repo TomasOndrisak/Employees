@@ -1,16 +1,16 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+
+
 
 namespace Infrastruktura.Models
 {
-    public class Pozicie
+    public partial class Pozicie
     {
-        [Key]
-        public int Id { get; set; }
         [Required]
-        public string Nazov { get; set; }
-        public ICollection<Pozicie> PozicieList { get; set; }
-      
-        
+        public int PoziciaId { get; set; }
+        [Required]
+        public string NazovPozicie { get; set; }
     }
 }

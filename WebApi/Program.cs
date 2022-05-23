@@ -7,7 +7,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace WebApis
+
+namespace WebApi
 {
     public class Program
     {

@@ -65,9 +65,9 @@ namespace WebApi.Controllers
 
         // DELETE: api/Zamestnanci/5
         [HttpDelete("{id}")]
-        public async Task DeleteZamestnanci(int id)
+        public async Task DeleteZamestnanci(int id, bool archivovat)
         {
-              await _context.DeleteZamestnanci(id);
+              await _context.DeleteZamestnanci(id, archivovat);
            
             
         }

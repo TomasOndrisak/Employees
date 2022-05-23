@@ -24,7 +24,7 @@ namespace WebApi.Controllers
 
         // GET: api/Predoslepozicie
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Predoslepozicie>>> GetPredoslepozicie()
+        public async Task<ActionResult<IEnumerable<PredoslePozicie>>> GetPredoslepozicie()
         {
             var get = await _context.GetPredoslePozicieServ();
            
@@ -34,7 +34,7 @@ namespace WebApi.Controllers
 
         // GET: api/Predoslepozicie/5
         [HttpGet("{idZamestnanca}")]
-        public async Task<ActionResult<IEnumerable<Predoslepozicie>>> GetId(int idZamestnanca)
+        public async Task<ActionResult<IEnumerable<PredoslePozicie>>> GetId(int idZamestnanca)
         {
             var Predoslepozicie = await _context.GetPredoslePozicieServ(idZamestnanca);
 
@@ -48,7 +48,7 @@ namespace WebApi.Controllers
         // PUT: api/Predoslepozicie/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task PutPredoslepozicieControler(int id, Predoslepozicie Predoslepozicie)
+        public async Task PutPredoslepozicieControler(int id, PredoslePozicie Predoslepozicie)
         {
             await _context.PutPredoslePozicieServ(id, Predoslepozicie);
 
@@ -58,7 +58,7 @@ namespace WebApi.Controllers
         // POST: api/Predoslepozicie
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task PostPredoslepozicie(Predoslepozicie Predoslepozicie)
+        public async Task PostPredoslepozicie(PredoslePozicie Predoslepozicie)
         {
             await _context.PostPredoslePozicieServ(Predoslepozicie);
 

@@ -6,7 +6,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Infrastruktura.Models;
-using Infrastruktura.Repositories;
+
+
 namespace Infrastruktura.Repositories
 {
  
@@ -20,27 +21,28 @@ namespace Infrastruktura.Repositories
         }
 
         
-        public async Task <IEnumerable<Predoslepozicie>> GetPredoslepozicie()
+        public async Task <IEnumerable<PredoslePozicie>> GetPredoslepozicie()
         {
             return await _context.Predoslepozicie.ToListAsync();
+
         }
 
  
-        public async Task <IEnumerable<Predoslepozicie>> GetPredoslepozicie(int idZamestnanca)
+        public async Task <IEnumerable<PredoslePozicie>> GetPredoslepozicie(int idZamestnanca)
         {
-            return await _context.Predoslepozicie.Where(id => id.idZamestnanca == idZamestnanca).ToListAsync();
+            return await _context.Predoslepozicie.Where(id => id.ZamestnanecId == idZamestnanca).ToListAsync();
         }
 
 
 
-                public async Task PutPredoslepozicie(int id, Predoslepozicie Predoslepozicie)
+                public async Task PutPredoslepozicie(int id, PredoslePozicie Predoslepozicie)
                 {
                     _context.Entry(Predoslepozicie).State = EntityState.Modified;
                     await _context.SaveChangesAsync();    
                 }
 
 
-                public async Task PostPredoslepozicie(Predoslepozicie Predoslepozicie)
+                public async Task PostPredoslepozicie(PredoslePozicie Predoslepozicie)
                 {
                     _context.Predoslepozicie.Add(Predoslepozicie);
                     await _context.SaveChangesAsync();
@@ -56,7 +58,7 @@ namespace Infrastruktura.Repositories
 
         private bool PredoslepozicieExists(int id)
         {
-            return _context.Predoslepozicie.Any(e => e.Id == id);
+            return _context.Predoslepozicie.Any(e => e.ZamestnanecId == id);
         }
     }
 }

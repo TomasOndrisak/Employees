@@ -47,9 +47,10 @@ namespace Application.Services
         //POST
 
         //DELETE
-        public async Task DeleteZamestnanci(int id)
+        public async Task DeleteZamestnanci(int id, bool archivovat)
         {
-             await zamestnanecRepository.DeleteZamestnanci(id);
+             await zamestnanecRepository.DeleteZamestnanci(id, archivovat);
+
         }
         //DELETE
 

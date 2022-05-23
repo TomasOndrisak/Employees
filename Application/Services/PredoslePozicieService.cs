@@ -17,20 +17,20 @@ namespace Application.Services
             this._predoslepozicieRepository = predoslepozicieRepository;
         }
 
-        public async Task <IEnumerable<Predoslepozicie>> GetPredoslePozicieServ()
+        public async Task <IEnumerable<PredoslePozicie>> GetPredoslePozicieServ()
         {
             return await _predoslepozicieRepository.GetPredoslepozicie();
         }
 
-        public async Task <IEnumerable<Predoslepozicie>> GetPredoslePozicieServ(int idZamestnanca)
+        public async Task <IEnumerable<PredoslePozicie>> GetPredoslePozicieServ(int idZamestnanca)
         {
             return await _predoslepozicieRepository.GetPredoslepozicie(idZamestnanca);
         }
-        public async Task PostPredoslePozicieServ(Predoslepozicie predoslepozicie)
+        public async Task PostPredoslePozicieServ(PredoslePozicie predoslepozicie)
         {
              await _predoslepozicieRepository.PostPredoslepozicie(predoslepozicie);
         }
-        public async Task PutPredoslePozicieServ(int id, Predoslepozicie predoslepozicie) // put nefunguje treba prehodnotit ci ho je treba
+        public async Task PutPredoslePozicieServ(int id, PredoslePozicie predoslepozicie) // put nefunguje treba prehodnotit ci ho je treba
         {
             await _predoslepozicieRepository.PutPredoslepozicie(id, predoslepozicie);
         }

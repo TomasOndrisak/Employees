@@ -5,8 +5,9 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Infrastruktura.Models;
 using Infrastruktura.Repositories;
+using Infrastruktura.Models;
+
 
 namespace Infrastruktura.Repositories
 {
@@ -54,7 +55,7 @@ namespace Infrastruktura.Repositories
         }
         private bool PozicieExists(int id)
         {
-            return _context.Pozicie.Any(e => e.Id == id);
+            return _context.Pozicie.Any(e => e.PoziciaId == id);
         }
         public async Task PostPozicieRepo(Pozicie pozicie)
         {
@@ -63,18 +64,25 @@ namespace Infrastruktura.Repositories
         }
         public async Task DeletePozicieRepo(int id)
         {
-            string nazovPozicie;
-            string poziciaZamestnanca;
+            
             var pozicie = await _context.Pozicie.FindAsync(id);
-           
-           /*
-            _context.Pozicie.Any(e => e.Nazov == nazovPozicie);
-            if (pozicie == )
+            
+         /*  var query = from q in _context.Zamestnanci
+                        where q.IdPozicie==id
+                        select q;
+        */
+            var qeuryy =  _context.Zamestnanci.Any(e => e.IdPozicie == id);
+            
+            
+            if (!qeuryy) 
             {
-                throw new ArgumentOutOfRangeException(nameof(id), "Pozicia existuje ID");
-            } */
-
-            _context.Pozicie.Remove(pozicie);
+                _context.Pozicie.Remove(pozicie);
+            }
+            else
+            {
+                  throw new ArgumentOutOfRangeException(nameof(id), "Poziciu nemozes zmazat pretoze je priradena zamestnancovi");
+            }
+            
             await _context.SaveChangesAsync();
         }
 
