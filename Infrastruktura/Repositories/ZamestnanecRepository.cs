@@ -48,12 +48,7 @@ namespace Infrastruktura.Repositories
             try
              {
                  await _context.SaveChangesAsync();
-                    // PredoslePozicie zmena = new PredoslePozicie();
-                    // zmena.ZamestnanecId=zamestnanec.ZamestnanecId;
-                    // zmena.PoziciaId=zamestnanec.IdPozicie;
-                    // zmena.DatumNastupu=zamestnanec.DatumNastupu;
-                    // zmena.DatumUkoncenia=DateTime.Now;
-                    //  _context.Predoslepozicie.Add(zmena);
+            
                     
                     var zamestnanecPo = from pozmene in _context.Zamestnanci
                                         where pozmene.ZamestnanecId == id
