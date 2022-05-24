@@ -5,7 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 using Infrastruktura.Models;
 using Infrastruktura.Repositories;
-using Microsoft.AspNetCore.Mvc;
 
 namespace Application.Services
 {

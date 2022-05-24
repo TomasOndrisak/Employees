@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Infrastruktura.Repositories;
 using Infrastruktura.Models;
-using Microsoft.AspNetCore.Mvc;
+
 namespace Application.Services
 {
     public class PredoslePozicieService
