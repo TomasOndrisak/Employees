@@ -19,8 +19,16 @@ namespace Infrastruktura.Repositories
         }
 
         public async Task <IEnumerable<Zamestnanci>> GetZamestnanci()
-        {
+        {   
+            
+            // var q = from Z in _context.Zamestnanci
+            //         join P in _context.Pozicie
+            //         on Z.IdPozicie equals P.PoziciaId
+            //         where Z.IdPozicie == P.PoziciaId
+            //         select P.NazovPozicie;
+
             return await _context.Zamestnanci.ToListAsync();
+
         }
 
         public async Task <Zamestnanci> GetZamestnanciId(int id)
@@ -78,6 +86,10 @@ namespace Infrastruktura.Repositories
        
         public async Task PostZamestnanci(Zamestnanci zamestnanci)
         {
+            //   var pozicia = from poz in _context.Pozicie
+            //                             where poz.PoziciaId == zamestnanci.IdPozicie
+            //                             select poz.NazovPozicie;
+
              _context.Zamestnanci.Add(zamestnanci);
              await _context.SaveChangesAsync();
         }
