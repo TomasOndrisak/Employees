@@ -39,6 +39,14 @@ namespace WebApi.Controllers
                var zamestnanciId = await _context.GetId(id);
                 return Ok(zamestnanciId);
         }
+
+                // GET: api/Zamestnanci/archivovany/true
+        [HttpGet("archivovany/{Archivovany}")]
+        public async Task<ActionResult<IEnumerable<Zamestnanci>>> GetZamestnanciArchivovany(bool Archivovany)
+        {
+               var zamestnanciArch = await _context.GetArch(Archivovany);
+                return Ok(zamestnanciArch);
+        }
         
 
         // PUT: api/Zamestnanci/5
@@ -47,9 +55,6 @@ namespace WebApi.Controllers
         public async Task Put(int id, Zamestnanci zamestnanci)
         {
               await _context.Put(id, zamestnanci);
-            
-            
-           
         }
        
 
@@ -59,8 +64,6 @@ namespace WebApi.Controllers
         public async Task PostZamestnanci(Zamestnanci zamestnanci)
         {
               await _context.PostZamestnanci(zamestnanci);
-          
-            
         }
 
         // DELETE: api/Zamestnanci/5
@@ -68,8 +71,6 @@ namespace WebApi.Controllers
         public async Task DeleteZamestnanci(int id, bool archivovat)
         {
               await _context.DeleteZamestnanci(id, archivovat);
-           
-            
         }
 
         

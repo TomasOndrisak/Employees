@@ -50,7 +50,7 @@ namespace WebApi.Controllers
             
         }
 
-        [HttpDelete]
+        [HttpDelete("{id}")]
         public async Task DeletePozicie(int id)
         {
             await _context.DeletePozicieService(id);

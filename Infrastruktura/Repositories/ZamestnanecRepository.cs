@@ -20,12 +20,6 @@ namespace Infrastruktura.Repositories
 
         public async Task <IEnumerable<Zamestnanci>> GetZamestnanci()
         {   
-            
-            // var q = from Z in _context.Zamestnanci
-            //         join P in _context.Pozicie
-            //         on Z.IdPozicie equals P.PoziciaId
-            //         where Z.IdPozicie == P.PoziciaId
-            //         select P.NazovPozicie;
 
             return await _context.Zamestnanci.ToListAsync();
 
@@ -37,6 +31,28 @@ namespace Infrastruktura.Repositories
             return zamestnanci;
 
         }
+        // GET ARCHIVOVANY, NEARCHIVOVANY
+        public async Task <IEnumerable<Zamestnanci>> GetArchivovany(bool Archivovany)
+        {   
+           
+            if(Archivovany){
+                var ArchivovanyZam = from zam in _context.Zamestnanci
+                                where zam.Archivovany == true
+                                select zam;
+                                return await ArchivovanyZam.ToListAsync();
+            }
+            else {
+                var ArchivovanyZam = from zam in _context.Zamestnanci
+                                where zam.Archivovany == false
+                                select zam;
+                                return await ArchivovanyZam.ToListAsync();
+            }
+           
+        
+            
+
+        }
+        // arch nearch
 
         public async Task Put(int id, Zamestnanci zamestnanci)
         {

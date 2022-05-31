@@ -33,14 +33,7 @@ namespace WebApi
             options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"), b => b.MigrationsAssembly("Infrastruktura.Repositories")));
            
             
-            //allowing cors
-            services.AddCors(option =>
-            {
-                option.AddDefaultPolicy(builder =>
-                {
-                    builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
-                });
-            });
+         
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
@@ -57,6 +50,15 @@ namespace WebApi
             // PozicieService
             services.AddScoped<PozicieService>();
             services.AddScoped<PozicieRepository>();
+
+               //allowing cors
+            services.AddCors(option =>
+            {
+                option.AddDefaultPolicy(builder =>
+                {
+                    builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
+                });
+            });
             
         }
 

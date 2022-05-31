@@ -54,6 +54,12 @@ namespace Application.Services
         }
         //DELETE
 
+
+        public async Task <IEnumerable<Zamestnanci>> GetArch(bool Archivovany)
+        {
+            return await zamestnanecRepository.GetArchivovany(Archivovany);
+        }
+
        
 
     }
