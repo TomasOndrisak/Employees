@@ -59,7 +59,11 @@ namespace Application.Services
         {
             return await zamestnanecRepository.GetArchivovany(Archivovany);
         }
-
+        //archivuj
+        public async Task Archivuj(int id, Zamestnanci zamestnanci)
+        {
+            await zamestnanecRepository.Archivuj(id,zamestnanci);
+        }
        
 
     }

@@ -72,7 +72,12 @@ namespace WebApi.Controllers
         {
               await _context.DeleteZamestnanci(id, archivovat);
         }
-
+        //archivuj
+        [HttpPut("/archivuj/{id}")]
+        public async Task Archivuj(int id, Zamestnanci zamestnanci)
+        {
+            await _context.Archivuj(id, zamestnanci);
+        }
         
     }
 }

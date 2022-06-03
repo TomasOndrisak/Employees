@@ -25,7 +25,7 @@ namespace Infrastruktura.Repositories
 
         }
 
-        public async Task <Zamestnanci> GetZamestnanciId(int id)
+        public async Task<Zamestnanci> GetZamestnanciId(int id)
         {
             var zamestnanci = await _context.Zamestnanci.FindAsync(id);
             return zamestnanci;
@@ -53,6 +53,14 @@ namespace Infrastruktura.Repositories
 
         }
         // arch nearch
+        public async Task Archivuj(int id, Zamestnanci zamestnanci){
+
+
+            zamestnanci.Archivovany=true;
+            _context.Entry(zamestnanci).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+        }
+
 
         public async Task Put(int id, Zamestnanci zamestnanci)
         {
