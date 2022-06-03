@@ -18,8 +18,8 @@ namespace Infrastruktura.Repositories
             _context = context;
         }
 
-        public async Task <IEnumerable<Zamestnanci>> GetZamestnanci()
-        {   
+        public async Task<IEnumerable<Zamestnanci>> GetZamestnanci()
+        {
 
             return await _context.Zamestnanci.ToListAsync();
 
@@ -32,31 +32,35 @@ namespace Infrastruktura.Repositories
 
         }
         // GET ARCHIVOVANY, NEARCHIVOVANY
-        public async Task <IEnumerable<Zamestnanci>> GetArchivovany(bool Archivovany)
-        {   
-           
-            if(Archivovany){
+        public async Task<IEnumerable<Zamestnanci>> GetArchivovany(bool Archivovany)
+        {
+
+            if (Archivovany)
+            {
                 var ArchivovanyZam = from zam in _context.Zamestnanci
-                                where zam.Archivovany == true
-                                select zam;
-                                return await ArchivovanyZam.ToListAsync();
+                                     where zam.Archivovany == true
+                                     select zam;
+
+                return await ArchivovanyZam.ToListAsync();
             }
-            else {
+            else
+            {
                 var ArchivovanyZam = from zam in _context.Zamestnanci
-                                where zam.Archivovany == false
-                                select zam;
-                                return await ArchivovanyZam.ToListAsync();
+                                     where zam.Archivovany == false
+                                     select zam;
+                return await ArchivovanyZam.ToListAsync();
             }
-           
-        
-            
+
+
+
 
         }
         // arch nearch
-        public async Task Archivuj(int id, Zamestnanci zamestnanci){
+        public async Task Archivuj(int id, Zamestnanci zamestnanci)
+        {
 
 
-            zamestnanci.Archivovany=true;
+            zamestnanci.Archivovany = true;
             _context.Entry(zamestnanci).State = EntityState.Modified;
             await _context.SaveChangesAsync();
         }
@@ -64,77 +68,77 @@ namespace Infrastruktura.Repositories
 
         public async Task Put(int id, Zamestnanci zamestnanci)
         {
-             
-             
+
+
             var zamestnanecPred = from zam in _context.Zamestnanci
-                                where zam.ZamestnanecId == id
-                                select zam.IdPozicie;
+                                  where zam.ZamestnanecId == id
+                                  select zam.IdPozicie;
             var zamestnanecPre = await zamestnanecPred.FirstOrDefaultAsync();
 
-            
-            
-                
-              _context.Entry(zamestnanci).State = EntityState.Modified;
-              
-              
+
+
+
+            _context.Entry(zamestnanci).State = EntityState.Modified;
+
+
             try
-             {
-                 await _context.SaveChangesAsync();
-            
-                    
-                    var zamestnanecPo = from pozmene in _context.Zamestnanci
-                                        where pozmene.ZamestnanecId == id
-                                        select pozmene.IdPozicie;
-
-                    if(zamestnanecPred != zamestnanecPo)
-                    { 
-                        _context.Predoslepozicie.Add(new PredoslePozicie{ZamestnanecId = zamestnanci.ZamestnanecId, PoziciaId = zamestnanci.IdPozicie, DatumNastupu = zamestnanci.DatumNastupu, DatumUkoncenia = DateTime.Now});
-                         await _context.SaveChangesAsync();
-                    }
-
-                 
-             }
-             catch (DbUpdateConcurrencyException)
-             {
-                 if (!ZamestnanciExists(id))
-                 {
-                    throw new ArgumentOutOfRangeException(nameof(id), "Nespravne ID");
-                 }
-             }
-         }
-
-            private bool ZamestnanciExists(int id)
             {
-                return _context.Zamestnanci.Any(e => e.ZamestnanecId == id);
+
+
+
+                var zamestnanecPo = from pozmene in _context.Zamestnanci
+                                    where pozmene.ZamestnanecId == id
+                                    select pozmene.IdPozicie;
+
+                if (zamestnanecPred != zamestnanecPo)
+                {
+                    _context.Predoslepozicie.Add(new PredoslePozicie { ZamestnanecId = zamestnanci.ZamestnanecId, PoziciaId = zamestnanci.IdPozicie, DatumNastupu = zamestnanci.DatumNastupu, DatumUkoncenia = DateTime.Now });
+
+                }
+
+                await _context.SaveChangesAsync();
             }
-       
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!ZamestnanciExists(id))
+                {
+                    throw new ArgumentOutOfRangeException(nameof(id), "Nespravne ID");
+                }
+            }
+        }
+
+        private bool ZamestnanciExists(int id)
+        {
+            return _context.Zamestnanci.Any(e => e.ZamestnanecId == id);
+        }
+
         public async Task PostZamestnanci(Zamestnanci zamestnanci)
         {
             //   var pozicia = from poz in _context.Pozicie
             //                             where poz.PoziciaId == zamestnanci.IdPozicie
             //                             select poz.NazovPozicie;
 
-             _context.Zamestnanci.Add(zamestnanci);
-             await _context.SaveChangesAsync();
+            _context.Zamestnanci.Add(zamestnanci);
+            await _context.SaveChangesAsync();
         }
 
-         public async Task DeleteZamestnanci(int id, bool archivovat)
-         {
+        public async Task DeleteZamestnanci(int id, bool archivovat)
+        {
 
-             var zamestnanci = await _context.Zamestnanci.FindAsync(id);
+            var zamestnanci = await _context.Zamestnanci.FindAsync(id);
 
-                if (archivovat)
-                {
-                    zamestnanci.Archivovany = true;
-                }
-                else 
-                {
-                    _context.Zamestnanci.Remove(zamestnanci);
-                }
+            if (archivovat)
+            {
+                zamestnanci.Archivovany = true;
+            }
+            else
+            {
+                _context.Zamestnanci.Remove(zamestnanci);
+            }
 
-                    await _context.SaveChangesAsync();
-         }
- 
+            await _context.SaveChangesAsync();
+        }
+
 
     }
 }
