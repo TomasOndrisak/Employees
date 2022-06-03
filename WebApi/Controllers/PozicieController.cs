@@ -29,6 +29,7 @@ namespace WebApi.Controllers
             var get = await _context.GetPozicieService();
             return Ok(get);
         }
+        
         [HttpGet("{id}")]
         public async Task<ActionResult<Pozicie>> GetPozicie(int id)
         {
