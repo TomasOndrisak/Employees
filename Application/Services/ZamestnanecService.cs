@@ -24,7 +24,7 @@ namespace Application.Services
 
             return zamestnanecRepository.GetZamestnanci();
         }
-        public async Task<ActionResult<Zamestnanci>> GetId(int id)
+        public async Task<Zamestnanci> GetId(int id)
         {
             return await zamestnanecRepository.GetZamestnanciId(id);
         }
