@@ -13,6 +13,8 @@ namespace Infrastruktura.Models
         [Required]
         public string NazovPozicie { get; set; }
         
+      
+        
 
     }
 }

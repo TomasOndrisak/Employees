@@ -28,9 +28,14 @@ namespace Infrastruktura.Repositories
 
                 entity.ToTable("Pozicie");
                 entity.HasKey(e => e.PoziciaId);
+                
+                
+               
                 entity.Property(e => e.NazovPozicie)
                     .HasMaxLength(255)
                     .IsUnicode(false);
+                
+
 
                 entity.Property(e => e.PoziciaId).HasColumnName("PoziciaID");
             });
@@ -58,9 +63,19 @@ namespace Infrastruktura.Repositories
 
             modelBuilder.Entity<Zamestnanci>(entity =>
             {
-                entity.HasKey(e => e.ZamestnanecId);
-                entity.ToTable("Zamestnanci");
 
+
+                entity.HasKey(e => e.ZamestnanecId);
+
+                 entity.HasOne(e => e.Pozicie)
+                        .WithMany()
+                        .HasForeignKey(x => x.PoziciaId);
+
+
+                
+
+
+                
                 entity.Property(e => e.Adresa)
                     .HasMaxLength(255)
                     .IsUnicode(false)
@@ -72,7 +87,7 @@ namespace Infrastruktura.Repositories
 
                 entity.Property(e => e.DatumNastupu).HasColumnType("date");
 
-                entity.Property(e => e.IdPozicie).HasColumnName("idPozicie");
+                entity.Property(e => e.PoziciaId).HasColumnName("PoziciaId");
 
                 entity.Property(e => e.Meno)
                     .HasMaxLength(255)
@@ -84,13 +99,13 @@ namespace Infrastruktura.Repositories
 
                 entity.Property(e => e.ZamestnanecId).HasColumnName("ZamestnanecID");
             });
-
+              
             OnModelCreatingPartial(modelBuilder);
         }
 
         partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
 
-
+        
 
 
     }

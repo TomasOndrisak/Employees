@@ -20,8 +20,8 @@ namespace Infrastruktura.Repositories
 
         public async Task<IEnumerable<Zamestnanci>> GetZamestnanci()
         {
-
-            return await _context.Zamestnanci.ToListAsync();
+            var a = await _context.Zamestnanci.Include(e => e.Pozicie).ToListAsync();
+            return a;
 
         }
 
@@ -41,14 +41,14 @@ namespace Infrastruktura.Repositories
                                      where zam.Archivovany == true
                                      select zam;
 
-                return await ArchivovanyZam.ToListAsync();
+                return await ArchivovanyZam.Include(e => e.Pozicie).ToListAsync();
             }
             else
             {
                 var ArchivovanyZam = from zam in _context.Zamestnanci
                                      where zam.Archivovany == false
                                      select zam;
-                return await ArchivovanyZam.ToListAsync();
+                return await ArchivovanyZam.Include(e => e.Pozicie).ToListAsync();
             }
 
 
@@ -72,7 +72,7 @@ namespace Infrastruktura.Repositories
 
             var zamestnanecPred = from zam in _context.Zamestnanci
                                   where zam.ZamestnanecId == id
-                                  select zam.IdPozicie;
+                                  select zam.PoziciaId;
             var zamestnanecPre = await zamestnanecPred.FirstOrDefaultAsync();
 
 
@@ -88,11 +88,11 @@ namespace Infrastruktura.Repositories
 
                 var zamestnanecPo = from pozmene in _context.Zamestnanci
                                     where pozmene.ZamestnanecId == id
-                                    select pozmene.IdPozicie;
+                                    select pozmene.PoziciaId;
 
                 if (zamestnanecPred != zamestnanecPo)
                 {
-                    _context.Predoslepozicie.Add(new PredoslePozicie { ZamestnanecId = zamestnanci.ZamestnanecId, PoziciaId = zamestnanci.IdPozicie, DatumNastupu = zamestnanci.DatumNastupu, DatumUkoncenia = DateTime.Now });
+                    _context.Predoslepozicie.Add(new PredoslePozicie { ZamestnanecId = zamestnanci.ZamestnanecId, PoziciaId = zamestnanci.PoziciaId, DatumNastupu = zamestnanci.DatumNastupu, DatumUkoncenia = DateTime.Now });
 
                 }
 

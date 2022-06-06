@@ -22,9 +22,12 @@ namespace Infrastruktura.Models
         public bool Archivovany { get; set; }
         //FK pozicie
         [Required]
-        public int IdPozicie { get; set; }
+        [ForeignKey(nameof(Pozicie))]
+        public int PoziciaId { get; set; }
+        [ForeignKey(nameof(PoziciaId))]
+        public Pozicie Pozicie {get; set;}
 
-        // public Pozicie Pozicie {get; set;}
+        
         
         
     }

@@ -68,7 +68,7 @@ namespace Infrastruktura.Repositories
             var pozicie = await _context.Pozicie.FindAsync(id);
             
          
-            var qeuryy =  _context.Zamestnanci.Any(e => e.IdPozicie == id);
+            var qeuryy =  _context.Zamestnanci.Any(e => e.PoziciaId == id);
             
             
             if (!qeuryy) 
@@ -78,6 +78,7 @@ namespace Infrastruktura.Repositories
             else
             {
                   throw new ArgumentOutOfRangeException(nameof(id), "Poziciu nemozes zmazat pretoze je priradena zamestnancovi");
+                  
             }
             
             await _context.SaveChangesAsync();
