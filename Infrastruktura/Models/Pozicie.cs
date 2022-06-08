@@ -10,6 +10,7 @@ namespace Infrastruktura.Models
         [Required]
       
         public int PoziciaId { get; set; }
+        
         [Required]
         public string NazovPozicie { get; set; }
         

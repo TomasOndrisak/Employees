@@ -20,7 +20,6 @@ namespace Infrastruktura.Models
         public DateTime DatumNastupu { get; set; }
         [Required]
         public bool Archivovany { get; set; }
-        //FK pozicie
         [Required]
         [ForeignKey(nameof(Pozicie))]
         public int PoziciaId { get; set; }

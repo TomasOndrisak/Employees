@@ -23,38 +23,39 @@ namespace Infrastruktura.Repositories
         
         public async Task <IEnumerable<PredoslePozicie>> GetPredoslepozicie()
         {
-            return await _context.Predoslepozicie.ToListAsync();
+            return await _context.Predoslepozicie.Include(e => e.Pozicie).ToListAsync();
 
         }
 
  
         public async Task <IEnumerable<PredoslePozicie>> GetPredoslepozicie(int idZamestnanca)
         {
-            return await _context.Predoslepozicie.Where(id => id.ZamestnanecId == idZamestnanca).ToListAsync();
+            //return await _context.Predoslepozicie.Where(id => id.ZamestnanecId == idZamestnanca).ToListAsync();
+            return  await _context.Predoslepozicie.Include(e => e.Pozicie).Where(id => id.ZamestnanecId == idZamestnanca).ToListAsync();
         }
 
 
 
-                public async Task PutPredoslepozicie(int id, PredoslePozicie Predoslepozicie)
-                {
-                    _context.Entry(Predoslepozicie).State = EntityState.Modified;
-                    await _context.SaveChangesAsync();    
-                }
+        public async Task PutPredoslepozicie(int id, PredoslePozicie Predoslepozicie)
+        {
+            _context.Entry(Predoslepozicie).State = EntityState.Modified;
+            await _context.SaveChangesAsync();    
+        }
 
 
-                public async Task PostPredoslepozicie(PredoslePozicie Predoslepozicie)
-                {
-                    _context.Predoslepozicie.Add(Predoslepozicie);
-                    await _context.SaveChangesAsync();
+        public async Task PostPredoslepozicie(PredoslePozicie Predoslepozicie)
+        {
+            _context.Predoslepozicie.Add(Predoslepozicie);
+            await _context.SaveChangesAsync();
 
                    
-                }
-                public async Task DeletePredoslepozicie(int id)
-                {
-                    var Predoslepozicie = await _context.Predoslepozicie.FindAsync(id);
-                    _context.Predoslepozicie.Remove(Predoslepozicie);
-                    await _context.SaveChangesAsync();
-                }
+        }
+        public async Task DeletePredoslepozicie(int id)
+        {
+            var Predoslepozicie = await _context.Predoslepozicie.FindAsync(id);
+            _context.Predoslepozicie.Remove(Predoslepozicie);
+            await _context.SaveChangesAsync();
+        }
 
         private bool PredoslepozicieExists(int id)
         {

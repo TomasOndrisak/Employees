@@ -28,9 +28,9 @@ namespace Application.Services
         }
         public async Task PostPredoslePozicieServ(PredoslePozicie predoslepozicie)
         {
-             await _predoslepozicieRepository.PostPredoslepozicie(predoslepozicie);
+            await _predoslepozicieRepository.PostPredoslepozicie(predoslepozicie);
         }
-        public async Task PutPredoslePozicieServ(int id, PredoslePozicie predoslepozicie) // put nefunguje treba prehodnotit ci ho je treba
+        public async Task PutPredoslePozicieServ(int id, PredoslePozicie predoslepozicie)
         {
             await _predoslepozicieRepository.PutPredoslepozicie(id, predoslepozicie);
         }

@@ -52,9 +52,12 @@ namespace WebApi.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task DeletePozicie(int id)
+        public async Task<ActionResult> DeletePozicie(int id)
         {
             await _context.DeletePozicieService(id);
+            return Ok(id);
+           
+                  
         }
         
     }

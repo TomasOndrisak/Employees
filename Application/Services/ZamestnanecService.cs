@@ -33,7 +33,7 @@ namespace Application.Services
         //PUT FUNGUJE
         public async Task Put(int id, Zamestnanci zamestnanci)
         {
-             await zamestnanecRepository.Put(id, zamestnanci);
+            await zamestnanecRepository.Put(id, zamestnanci);
 
         }
         //PUT FUNGUJE
@@ -49,7 +49,7 @@ namespace Application.Services
         //DELETE
         public async Task DeleteZamestnanci(int id, bool archivovat)
         {
-             await zamestnanecRepository.DeleteZamestnanci(id, archivovat);
+            await zamestnanecRepository.DeleteZamestnanci(id, archivovat);
 
         }
         //DELETE

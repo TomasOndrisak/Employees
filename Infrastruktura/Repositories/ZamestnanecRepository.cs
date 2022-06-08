@@ -27,8 +27,9 @@ namespace Infrastruktura.Repositories
 
         public async Task<Zamestnanci> GetZamestnanciId(int id)
         {
-            var zamestnanci = await _context.Zamestnanci.FindAsync(id);
-            return zamestnanci;
+            var Zamestnanci = await _context.Zamestnanci.Include(e => e.Pozicie).FirstOrDefaultAsync(e => e.ZamestnanecId == id);
+            // var zamestnanci = await _context.Zamestnanci.FindAsync(id);
+            return Zamestnanci;
 
         }
         // GET ARCHIVOVANY, NEARCHIVOVANY
@@ -70,15 +71,8 @@ namespace Infrastruktura.Repositories
         {
 
 
-            var zamestnanecPred = from zam in _context.Zamestnanci
-                                  where zam.ZamestnanecId == id
-                                  select zam.PoziciaId;
-            var zamestnanecPre = await zamestnanecPred.FirstOrDefaultAsync();
+            var zamestnanecPred = zamestnanci.PoziciaId;
 
-
-
-
-            _context.Entry(zamestnanci).State = EntityState.Modified;
 
 
             try
@@ -86,16 +80,18 @@ namespace Infrastruktura.Repositories
 
 
 
-                var zamestnanecPo = from pozmene in _context.Zamestnanci
-                                    where pozmene.ZamestnanecId == id
-                                    select pozmene.PoziciaId;
+                var zamestnanecPo = _context.Zamestnanci.Include(e => e.Pozicie).Where(q => q.ZamestnanecId == id).Select(x => x.PoziciaId).SingleOrDefault();
+                _context.Entry(zamestnanci).State = EntityState.Modified;
+
+
+
+
 
                 if (zamestnanecPred != zamestnanecPo)
                 {
                     _context.Predoslepozicie.Add(new PredoslePozicie { ZamestnanecId = zamestnanci.ZamestnanecId, PoziciaId = zamestnanci.PoziciaId, DatumNastupu = zamestnanci.DatumNastupu, DatumUkoncenia = DateTime.Now });
 
                 }
-
                 await _context.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
@@ -114,9 +110,6 @@ namespace Infrastruktura.Repositories
 
         public async Task PostZamestnanci(Zamestnanci zamestnanci)
         {
-            //   var pozicia = from poz in _context.Pozicie
-            //                             where poz.PoziciaId == zamestnanci.IdPozicie
-            //                             select poz.NazovPozicie;
 
             _context.Zamestnanci.Add(zamestnanci);
             await _context.SaveChangesAsync();

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Infrastruktura.Models
 {
@@ -12,5 +13,8 @@ namespace Infrastruktura.Models
         public int PoziciaId { get; set; }
         public DateTime DatumNastupu { get; set; }
         public DateTime DatumUkoncenia { get; set; }
+        
+        [ForeignKey(nameof(PoziciaId))]
+        public Pozicie Pozicie {get; set;}
     }
 }

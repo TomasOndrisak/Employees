@@ -77,7 +77,7 @@ namespace Infrastruktura.Repositories
             }
             else
             {
-                  throw new ArgumentOutOfRangeException(nameof(id), "Poziciu nemozes zmazat pretoze je priradena zamestnancovi");
+                  
                   
             }
             

@@ -27,7 +27,7 @@ namespace Application.Services
         }
         public async Task PostPozicieService(Pozicie pozicie)
         {
-             await _pozicieRepository.PostPozicieRepo(pozicie);
+            await _pozicieRepository.PostPozicieRepo(pozicie);
         }
         public async Task PutPozicieService(int id, Pozicie pozicie)
         {

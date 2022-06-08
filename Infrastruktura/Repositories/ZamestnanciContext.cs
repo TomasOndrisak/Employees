@@ -21,55 +21,56 @@ namespace Infrastruktura.Repositories
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.HasAnnotation("Relational:Collation", "Latin1_General_CI_AS");
 
-            modelBuilder.Entity<Pozicie>(entity =>
-            {
+        modelBuilder.HasAnnotation("Relational:Collation", "Latin1_General_CI_AS");
 
-                entity.ToTable("Pozicie");
-                entity.HasKey(e => e.PoziciaId);
-                
-                
+        modelBuilder.Entity<Pozicie>(entity =>
+        {
+
+        entity.ToTable("Pozicie");
+        entity.HasKey(e => e.PoziciaId);
                
-                entity.Property(e => e.NazovPozicie)
-                    .HasMaxLength(255)
-                    .IsUnicode(false);
-                
+        entity.Property(e => e.NazovPozicie)
+            .HasMaxLength(255)
+            .IsUnicode(false);
 
+        entity.Property(e => e.PoziciaId).HasColumnName("PoziciaID");
+        });
 
-                entity.Property(e => e.PoziciaId).HasColumnName("PoziciaID");
-            });
+        modelBuilder.Entity<PredoslePozicie>(entity =>
+        {
 
-            modelBuilder.Entity<PredoslePozicie>(entity =>
-            {
-                entity.HasKey(e => e.IDPredoslej);
+        entity.HasKey(e => e.IDPredoslej);
 
-                entity.ToTable("PredoslePozicie");
+        entity.ToTable("PredoslePozicie");
 
+        entity.HasOne(e => e.Pozicie)
+                .WithMany()
+                .HasForeignKey(x => x.PoziciaId);
 
+        entity.Property(e => e.DatumNastupu)
+            .HasColumnType("date")
+            .HasColumnName("datumNastupu");
 
-                entity.Property(e => e.DatumNastupu)
-                    .HasColumnType("date")
-                    .HasColumnName("datumNastupu");
+        entity.Property(e => e.DatumUkoncenia)
+            .HasColumnType("date")
+            .HasColumnName("datumUkoncenia");
 
-                entity.Property(e => e.DatumUkoncenia)
-                    .HasColumnType("date")
-                    .HasColumnName("datumUkoncenia");
+        entity.Property(e => e.PoziciaId).HasColumnName("poziciaId");
 
-                entity.Property(e => e.PoziciaId).HasColumnName("poziciaId");
+        entity.Property(e => e.ZamestnanecId).HasColumnName("ZamestnanecId");
 
-                entity.Property(e => e.ZamestnanecId).HasColumnName("ZamestnanecId");
-            });
+        });
 
             modelBuilder.Entity<Zamestnanci>(entity =>
             {
 
 
-                entity.HasKey(e => e.ZamestnanecId);
+            entity.HasKey(e => e.ZamestnanecId);
 
-                 entity.HasOne(e => e.Pozicie)
-                        .WithMany()
-                        .HasForeignKey(x => x.PoziciaId);
+            entity.HasOne(e => e.Pozicie)
+                .WithMany()
+                .HasForeignKey(x => x.PoziciaId);
 
 
                 

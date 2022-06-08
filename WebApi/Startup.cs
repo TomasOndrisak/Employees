@@ -31,14 +31,16 @@ namespace WebApi
         {
             services.AddDbContext<ZamestnanciContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"), b => b.MigrationsAssembly("Infrastruktura.Models")));
-           
-            
-         
+
+
+
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "WebApi", Version = "v1" });
             });
+
+            
             services.AddControllers().AddNewtonsoftJson(options =>
             options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
             // services
@@ -52,7 +54,7 @@ namespace WebApi
             services.AddScoped<PozicieService>();
             services.AddScoped<PozicieRepository>();
 
-               //allowing cors
+            //allowing cors
             services.AddCors(option =>
             {
                 option.AddDefaultPolicy(builder =>
@@ -60,7 +62,7 @@ namespace WebApi
                     builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
                 });
             });
-            
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
