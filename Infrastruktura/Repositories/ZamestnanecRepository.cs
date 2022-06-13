@@ -110,9 +110,12 @@ namespace Infrastruktura.Repositories
 
         public async Task PostZamestnanci(Zamestnanci zamestnanci)
         {
-
+            DateTime StartDate = new DateTime(2004, 1, 1);
+            DateTime StartNastupu = DateTime.Now.Date;
+            if(zamestnanci.DatumNarodenia < StartDate && zamestnanci.DatumNastupu >= StartNastupu){
             _context.Zamestnanci.Add(zamestnanci);
             await _context.SaveChangesAsync();
+            }
         }
 
         public async Task DeleteZamestnanci(int id, bool archivovat)
