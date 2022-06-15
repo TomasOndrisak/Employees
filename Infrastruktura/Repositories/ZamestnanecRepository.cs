@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Infrastruktura.Models;
 
@@ -28,7 +26,6 @@ namespace Infrastruktura.Repositories
         public async Task<Zamestnanci> GetZamestnanciId(int id)
         {
             var Zamestnanci = await _context.Zamestnanci.Include(e => e.Pozicie).FirstOrDefaultAsync(e => e.ZamestnanecId == id);
-            // var zamestnanci = await _context.Zamestnanci.FindAsync(id);
             return Zamestnanci;
 
         }
@@ -74,13 +71,13 @@ namespace Infrastruktura.Repositories
             var zamestnanecPred = zamestnanci.PoziciaId;
 
 
-
             try
             {
 
 
 
                 var zamestnanecPo = _context.Zamestnanci.Include(e => e.Pozicie).Where(q => q.ZamestnanecId == id).Select(x => x.PoziciaId).SingleOrDefault();
+                
                 _context.Entry(zamestnanci).State = EntityState.Modified;
 
 
@@ -112,9 +109,11 @@ namespace Infrastruktura.Repositories
         {
             DateTime StartDate = new DateTime(2004, 1, 1);
             DateTime StartNastupu = DateTime.Now.Date;
-            if(zamestnanci.DatumNarodenia < StartDate && zamestnanci.DatumNastupu >= StartNastupu){
-            _context.Zamestnanci.Add(zamestnanci);
-            await _context.SaveChangesAsync();
+            
+            if(zamestnanci.DatumNarodenia < StartDate && zamestnanci.DatumNastupu >= StartNastupu)
+            {
+                _context.Zamestnanci.Add(zamestnanci);
+                await _context.SaveChangesAsync();
             }
         }
 
@@ -130,6 +129,11 @@ namespace Infrastruktura.Repositories
             else
             {
                 _context.Zamestnanci.Remove(zamestnanci);
+                var predosle = _context.Predoslepozicie.Where(x => x.ZamestnanecId == id).ToList();
+                foreach(var Predosla in predosle)
+                {
+                    _context.Predoslepozicie.Remove(Predosla);
+                }
             }
 
             await _context.SaveChangesAsync();

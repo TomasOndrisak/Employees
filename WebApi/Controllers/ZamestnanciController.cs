@@ -52,31 +52,44 @@ namespace WebApi.Controllers
         // PUT: api/Zamestnanci/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task Put(int id, Zamestnanci zamestnanci)
+        public async Task<ActionResult<Zamestnanci>> Put(int id, Zamestnanci zamestnanci)
         {
+            
               await _context.Put(id, zamestnanci);
+              return Ok();
+            
+
         }
        
 
         // POST: api/Zamestnanci
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task PostZamestnanci(Zamestnanci zamestnanci)
+        public async Task<ActionResult<Zamestnanci>> PostZamestnanci(Zamestnanci zamestnanci)
         {
+              
+            if (zamestnanci.DatumNarodenia < new DateTime(2004, 1, 1) && zamestnanci.DatumNastupu >= DateTime.Now.Date)
+            {
               await _context.PostZamestnanci(zamestnanci);
+              return Ok();
+            }
+              else return BadRequest();
+
         }
 
         // DELETE: api/Zamestnanci/5
         [HttpDelete("{id}")]
-        public async Task DeleteZamestnanci(int id, bool archivovat)
+        public async Task<ActionResult<Zamestnanci>> DeleteZamestnanci(int id, bool archivovat)
         {
               await _context.DeleteZamestnanci(id, archivovat);
+              return Ok();
         }
         //archivuj
         [HttpPut("/archivuj/{id}")]
-        public async Task Archivuj(int id, Zamestnanci zamestnanci)
+        public async Task<ActionResult<Zamestnanci>> Archivuj(int id, Zamestnanci zamestnanci)
         {
             await _context.Archivuj(id, zamestnanci);
+            return Ok();
         }
         
     }
