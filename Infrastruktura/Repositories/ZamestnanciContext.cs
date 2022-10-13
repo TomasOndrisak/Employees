@@ -71,11 +71,6 @@ namespace Infrastruktura.Repositories
             entity.HasOne(e => e.Pozicie)
                 .WithMany()
                 .HasForeignKey(x => x.PoziciaId);
-
-
-                
-
-
                 
                 entity.Property(e => e.Adresa)
                     .HasMaxLength(255)

@@ -30,7 +30,6 @@ namespace Infrastruktura.Repositories
  
         public async Task <IEnumerable<PredoslePozicie>> GetPredoslepozicie(int idZamestnanca)
         {
-            //return await _context.Predoslepozicie.Where(id => id.ZamestnanecId == idZamestnanca).ToListAsync();
             return  await _context.Predoslepozicie.Include(e => e.Pozicie).Where(id => id.ZamestnanecId == idZamestnanca).ToListAsync();
         }
 
