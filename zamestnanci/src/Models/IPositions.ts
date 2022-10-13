@@ -1,4 +1,4 @@
 export default interface IPositions {
-    positionId: number,
-    positionName: string
+    positionId: number;
+    positionName: string;
   }

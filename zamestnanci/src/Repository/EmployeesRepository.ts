@@ -13,22 +13,22 @@ class EmployeesRepository {
     return http.delete(`api/employees/${employeeId}`);
   }
 
-  getId(employeeId: number): Promise<any>{
-    return http.get('api/employees/'+employeeId);
+  getId(employeeId: number): Promise<any> {
+    return http.get('api/employees/' + employeeId);
   }
 
-  archive(employeeId: number, data:any): Promise<any>{
+  archive(employeeId: number, data: any): Promise<any> {
     return http.put("/archive/" + employeeId, data)
-    
-  }
-  
-  Edit(id: number, data: any): Promise<any>{
-    return http.put("api/employees/"+id, data);
+
   }
 
-  Post(data: any): Promise<any>{
-      return http.post("api/employees/", data);
-    }
- 
+  Edit(id: number, data: any): Promise<any> {
+    return http.put("api/employees/" + id, data);
+  }
+
+  Post(data: any): Promise<any> {
+    return http.post("api/employees/", data);
+  }
+
 }
 export default new EmployeesRepository();

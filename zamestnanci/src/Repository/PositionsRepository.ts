@@ -5,7 +5,7 @@ class Positions {
     return http.get("api/positions");
   }
 
-    delete(positionId: number): Promise<any> {
+  delete(positionId: number): Promise<any> {
     return http.delete("api/positions/" + positionId);
   }
 

@@ -1,8 +1,13 @@
 <template>
   <div class="container col-5">
-    <br><br><br><br>
+    <br /><br /><br /><br />
     <div class="Pozicie">
-      <button v-b-modal="'poziciaPost'" class="btn btn-secondary btn-square-md float-end">Create position</button>
+      <button
+        v-b-modal="'ModalPosition'"
+        class="btn btn-secondary btn-square-md float-end"
+      >
+        Create position
+      </button>
       <table class="table">
         <thead class="thead-light">
           <tr>
@@ -14,27 +19,33 @@
             <td>{{ position.positionName }}</td>
 
             <th></th>
-            <td><button type="button" class="btn btn-danger" v-on:click="Delete(position.positionId)">Delete</button></td>
+            <td>
+              <button
+                type="button"
+                class="btn btn-danger"
+                v-on:click="Delete(position.positionId)"
+              >
+                Delete
+              </button>
+            </td>
           </tr>
         </tbody>
       </table>
     </div>
-    </div>
+  </div>
   <Modal_Pozicia @refresh="Get"></Modal_Pozicia>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
-import Positions from '../Models/IPositions';
+import { defineComponent } from "vue";
+import Positions from "../Models/IPositions";
 import ResponseData from "../Models/IResponseData";
 import PositionsRepository from "../Repository/PositionsRepository";
-import Modal_Pozicia from '../modal/Modal-Pozicia.vue';
-
+import Modal_Pozicia from "../modal/Modal-Pozicia.vue";
 
 export default defineComponent({
-
   components: {
-    Modal_Pozicia
+    Modal_Pozicia,
   },
   //popup
   data() {
@@ -44,30 +55,32 @@ export default defineComponent({
   },
 
   methods: {
-
-
     // GET ALL
     Get() {
-      PositionsRepository.getAll().then((response: ResponseData) => {
-        this.positions = response.data;
-        console.log(response.data);
-      })
+      PositionsRepository.getAll()
+        .then((response: ResponseData) => {
+          this.positions = response.data;
+          console.log(response.data);
+        })
         .catch((e: Error) => {
           confirm("Server is offline");
           console.log(e);
         });
     },
 
-
     Delete(positionId: number) {
-      if (confirm("Chcete určite trvalo zmazať poziciu ?")) {
-        PositionsRepository.delete(positionId).then((response: ResponseData) => {
-          console.log(response.data);
-          this.Get();
-        }).catch((e: Error) => {
-          confirm("Poziciu ma pridelenu niektori zo zamestnancov, nemozete tuto poziciu zmazat.")
-          console.log(e);
-        });
+      if (confirm("Do you want permanently delete this position?")) {
+        PositionsRepository.delete(positionId)
+          .then((response: ResponseData) => {
+            console.log(response.data);
+            this.Get();
+          })
+          .catch((e: Error) => {
+            confirm(
+              "You can't delte this position. The position is assigned to an employee."
+            );
+            console.log(e);
+          });
       }
     },
   },
@@ -75,11 +88,6 @@ export default defineComponent({
   mounted() {
     this.Get();
   },
-
-})
-
-
-
-
+});
 </script>
 
