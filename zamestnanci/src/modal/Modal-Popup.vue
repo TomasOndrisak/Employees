@@ -1,26 +1,26 @@
 <template>
 
- <b-modal :hide-footer="true"  class="modal" :id="'modalZamestnanec'+zam.zamestnanecId" title="Zamestnanec" v-for="zam in Zamestnanci" v-bind:key="zam.zamestnanecId">
-           <h1><p> {{zam.meno}} {{zam.priezvisko}}<br></p></h1>   
+ <b-modal :hide-footer="true"  class="modal" :id="'modalZamestnanec'+emp.employeeId" title="Zamestnanec" v-for="emp in Employees" v-bind:key="emp.employeeId">
+           <h1><p> {{emp.name}} {{emp.lastName}}<br></p></h1>   
            <p class="my-4">
-                           <b>Adresa:</b> <a>{{zam.adresa}}</a> <br>
-                           <b>Pozicia:</b> <a>{{zam.pozicie.nazovPozicie}}</a><br>
+                           <b>Adresa:</b> <a>{{emp.adress}}</a> <br>
+                           <b>Pozicia:</b> <a>{{emp.positions.positionName}}</a><br>
                            <b>Plat:</b> <a>12 345 €</a><br>
-                           <b>Datum Narodenia:</b> <a>{{zam.datumNarodenia}}</a><br>
-                            <b>Datum Nastupu:</b> <a>{{zam.datumNastupu}}</a>
+                           <b>Datum Narodenia:</b> <a>{{emp.dateOfBirth}}</a><br>
+                            <b>Datum Nastupu:</b> <a>{{emp.dateOfEntry}}</a>
       
                 </p></b-modal>
 </template>
 <script lang="ts">
 import { defineComponent, PropType } from 'vue';
-import Zamestnanci from '../Types/Zamestnanci';
+import Employees from '../Models/IEmployees';
 export default defineComponent({
     name: "Modal_pop",
 
     props: {   
-       Zamestnanci : {
+       Employees : {
             required: true,
-             type: Array as PropType<Zamestnanci[]>
+             type: Array as PropType<Employees[]>
         }
     },
 

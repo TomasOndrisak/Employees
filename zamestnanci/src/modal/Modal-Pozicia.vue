@@ -6,7 +6,7 @@
       <form @submit.prevent="Post()" class="container form-inline"><br>
         <div class="mb-2">
           <th>Názov pozície</th>
-          <input type="text" class="form-control" id="meno" v-model="pozicia.nazovPozicie" placeholder="nazov pozicie"
+          <input type="text" class="form-control" id="meno" v-model="position.positionName" placeholder="nazov pozicie"
             required>
         </div>
 
@@ -20,8 +20,8 @@
 </template>
 <script lang="ts">
 import { defineComponent, PropType } from 'vue';
-import api from '../services/Pozicie';
-import ResponseData from '../Types/ResponseData';
+import api from '../Repository/PositionsRepository';
+import ResponseData from '../Models/IResponseData';
 
 export default defineComponent({
     name: "Modal_poz",
@@ -29,9 +29,9 @@ export default defineComponent({
    data(){
      return {
 
-       pozicia: {
-         poziciaId: 0,
-         nazovPozicie: "",
+       position: {
+         positionId: 0,
+         positionName: "",
        },
 
      };
@@ -45,9 +45,9 @@ export default defineComponent({
       },
 
      Post(){
-       api.PostData(this.pozicia).then((response: ResponseData) => {
+       api.PostData(this.position).then((response: ResponseData) => {
                this.refresh();
-               this.pozicia.nazovPozicie="";
+               this.position.positionName="";
                 console.log(response.data);
             })
                 .catch((e: Error) => {

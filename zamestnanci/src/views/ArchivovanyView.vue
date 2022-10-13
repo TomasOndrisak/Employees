@@ -14,26 +14,26 @@
     </tr>
     </thead>
   <tbody>
-        <tr v-for="(zam, index) in zamestnanci" v-bind:key="index">
-        <td><a v-b-modal="'modalZamestnanec' + zam.zamestnanecId">{{zam.meno}} {{zam.priezvisko}}</a></td>
-        <td>{{zam.pozicie.nazovPozicie}}</td> 
+        <tr v-for="(emp, index) in employees" v-bind:key="index">
+        <td><a v-b-modal="'modalZamestnanec' + emp.employeeId">{{emp.name}} {{emp.lastName}}</a></td>
+        <td>{{emp.positions.positionName}}</td> 
         <td> </td>
-        <td><button type="button" class="btn btn-danger" v-on:click="Delete(zam.zamestnanecId)">Zmazať</button></td> 
+        <td><button type="button" class="btn btn-danger" v-on:click="Delete(emp.employeeId)">Zmazať</button></td> 
       </tr>
   </tbody>
 </table>
 </div>
 
 
-<Modal_pop :Zamestnanci="zamestnanci">
+<Modal_pop :Employees="employees">
 </Modal_pop>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import Zamestnanci from '../Types/Zamestnanci';
-import ResponseData from "../Types/ResponseData";
-import Zamestnanec from "../services/Zamestnanec";
+import Employees from '../Models/IEmployees';
+import ResponseData from "../Models/IResponseData";
+import EmployeesRepository from "../Repository/EmployeesRepository";
 import Modal_pop from '../modal/Modal-Popup.vue';
 
 export default defineComponent({
@@ -44,17 +44,11 @@ export default defineComponent({
     components: {
         Modal_pop
     },
-    
-    
-
-    
-        //popup
+   //popup
     data() {
         return {
-            zamestnanci: [] as Zamestnanci[],
-            
-        
-            
+            employees: [] as Employees[],
+       
         };
     },
     methods: {
@@ -62,19 +56,19 @@ export default defineComponent({
         
         // GET ALL
         Get() {
-            Zamestnanec.getArchivovany().then((response: ResponseData) => {
-                this.zamestnanci = response.data;
+            EmployeesRepository.getArchived().then((response: ResponseData) => {
+                this.employees = response.data;
                 console.log(response.data);
             })
                 .catch((e: Error) => {
-                confirm("Server nie je zapnuty");
+                confirm("Server is offline");
                 console.log(e);
             });
         },
         // GET ID 
         GetId(id: any) {
-            Zamestnanec.getId(id).then((response: ResponseData) => {
-                this.zamestnanci = response.data;
+            EmployeesRepository.getId(id).then((response: ResponseData) => {
+                this.employees = response.data;
                 console.log(response.data);
             })
                 .catch((e: Error) => {
@@ -83,8 +77,8 @@ export default defineComponent({
         },
 
         Delete(id:number){
-          if(confirm("Chcete určite trvalo zmazať zamestnanca ?")){
-          Zamestnanec.delete(id).then((response: ResponseData) => {
+          if(confirm("The employee will be permanently deleted")){
+          EmployeesRepository.delete(id).then((response: ResponseData) => {
           console.log(response.data);
           this.Get();
         })
@@ -92,7 +86,7 @@ export default defineComponent({
           console.log(e);
         });
         
-        Zamestnanec.getArchivovany();}
+        EmployeesRepository.getArchived();}
         
     },
 

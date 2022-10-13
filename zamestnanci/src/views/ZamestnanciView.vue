@@ -1,8 +1,6 @@
 <template>
-<div>
+
   <br>
-
-
 <div class="container">
   <br><br><br>
   <button v-b-modal="'ZamestnanecModal'" class="btn btn-secondary btn-square-md float-end">Pridať nového zamestnanca</button>
@@ -15,29 +13,28 @@
     </tr>
     </thead>
   <tbody>
-        <tr v-for="(zam, index) in zamestnanci" v-bind:key="index">
-        <td><a v-b-modal="'modalZamestnanec' + zam.zamestnanecId">{{zam.meno}} {{zam.priezvisko}}</a></td>
-        <td>{{zam.pozicie.nazovPozicie}}</td> 
-        <td><button v-b-modal="'modalZamestnanecEdit'" v-on:click="SetZamestnanec(zam.zamestnanecId)" class="btn btn-warning">Editovať</button></td>
+        <tr v-for="(emp, index) in employees" v-bind:key="index">
+        <td><a v-b-modal="'modalZamestnanec' + emp.employeeId">{{emp.name}} {{emp.lastName}}</a></td>
+        <td>{{emp.positions.positionName}}</td> 
+        <td><button v-b-modal="'modalZamestnanecEdit'" v-on:click="SetEmployee(emp.employeeId)" class="btn btn-warning">Edit</button></td>
     
-        <td><button type="button" class="btn btn-danger" v-on:click="Delete(zam.zamestnanecId)">Zmazať</button></td> 
+        <td><button type="button" class="btn btn-danger" v-on:click="Delete(emp.employeeId)">Delete</button></td> 
       </tr>
   </tbody>
 </table>
 
 </div>
-</div>
-<Modal_edit @refresh="Get" :zamestnanec="zamestnanec"></Modal_edit>
-<Modal_post @ref="Get" :zamestnanci="zamestnanci"></Modal_post>
-<Modal_pop :Zamestnanci="zamestnanci"></Modal_pop>
 
+<Modal_edit @refresh="Get" :employee="employee"/>
+<Modal_post @ref="Get" :zamestnanci="employees" />
+<Modal_pop :Employees="employees"/>
 </template>
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
-import Zamestnanci from '../Types/Zamestnanci';
-import ResponseData from "../Types/ResponseData";
-import Zamestnanec from "../services/Zamestnanec";
+import IEmployees from '../Models/IEmployees';
+import ResponseData from "../Models/IResponseData";
+import EmployeeRepository from "../Repository/EmployeesRepository";
 import Modal_pop from '../modal/Modal-Popup.vue';
 import Modal_post from '../modal/Modal-PutPost.vue';
 import Modal_edit from '../modal/Modal-edit.vue';
@@ -55,49 +52,49 @@ export default defineComponent({
     data() {
 
         return {
-            zamestnanci: [] as Zamestnanci[],
-            zamestnanec: {} as any
+            employees: [] as IEmployees[],
+            employee: {} as any
         };
     },
     methods: {
      
         // GET ALL
         Get() {
-            Zamestnanec.getAll().then((response: ResponseData) => {
-                this.zamestnanci = response.data;
+            EmployeeRepository.getAll().then((response: ResponseData) => {
+                this.employees = response.data;
                 
                 console.log(response.data);})
                 .catch((e: Error) => {
                 console.log(e); });
         },
 
-        SetZamestnanec(id: number){
-          this.zamestnanec = this.zamestnanci.find(z => z.zamestnanecId === id);
+        SetEmployee(id: number){
+          this.employee = this.employees.find(emp => emp.employeeId === id);
         },  
 
         // GET ID 
-        GetId(id: any) {
-            Zamestnanec.getId(id).then((response: ResponseData) => {
-                this.zamestnanci = response.data;
+        async GetId(id: any) {
+           await EmployeeRepository.getId(id).then((response: ResponseData) => {
+                this.employees = response.data;
                 console.log(response.data);}).catch((e: Error) => {
                 console.log(e);});
         },
 
-        Delete(zamestnanecId:number){
+        Delete(employeeId:number){
             if(confirm("chcete archivovať zamestnanca ?")){
-              Zamestnanec.getId(zamestnanecId).then((response:ResponseData) =>
+              EmployeeRepository.getId(employeeId).then((response:ResponseData) =>
               {console.log(response.data)
 
-              Zamestnanec.archivuj(zamestnanecId, response.data).then((response:ResponseData) =>
-              {console.log(console.error(response.data))
+              EmployeeRepository.archive(employeeId, response.data).then((ResponseData) =>
+              {console.log(console.error(ResponseData))
                this.Get();});
               }).catch((e: Error) => {
           console.log(e);
         });}
 
           else if (confirm("Chcete trvalo zmazat zamestnanca ?")){
-          Zamestnanec.delete(zamestnanecId).then((response: ResponseData) => {
-          console.log(response.data);
+          EmployeeRepository.delete(employeeId).then((ResponseData) => {
+          console.log(ResponseData);
           this.Get();
         }).catch((e: Error) => {
           console.log(e);

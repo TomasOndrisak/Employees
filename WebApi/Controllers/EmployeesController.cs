@@ -35,7 +35,6 @@ namespace WebApi.Controllers
                 return Ok(employeesId);
         }
 
-                // GET: api/Zamestnanci/archivovany/true
         [HttpGet("archived/{archived}")]
         public async Task<ActionResult<IEnumerable<Employees>>> GetArchivedEmployees(bool archived)
         {
@@ -51,7 +50,6 @@ namespace WebApi.Controllers
               return Ok();
         }
        
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
         public async Task<ActionResult<Employees>> PostEmployees(Employees employees)
         {
@@ -73,7 +71,7 @@ namespace WebApi.Controllers
         }
 
         [HttpPut("/archive/{id}")]
-        public async Task<ActionResult<Employees>> Archivuj(int id, Employees employees)
+        public async Task<ActionResult<Employees>> Archive(int id, Employees employees)
         {
             await _context.Archive(id, employees);
             return Ok();

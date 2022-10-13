@@ -6,30 +6,30 @@
       <form @submit.prevent="Edit()" class="border container form-inline"><br>
         <div class="mb-2">
           <th>Meno</th>
-          <input v-model="post.meno" type="text" class="form-control" id="meno">
+          <input v-model="post.name" type="text" class="form-control" id="meno">
         </div>
         <th>Priezvisko</th>
         <div class="mb-2">
-         <input type="text" class="form-control" v-model="post.priezvisko">
+         <input type="text" class="form-control" v-model="post.lastName">
         </div>
         <th>Adresa</th>
         <div class="mb-2">
-          <input type="text" class="form-control" v-model="post.adresa">
+          <input type="text" class="form-control" v-model="post.adress">
         </div>
         <th>Dátum narodenia</th>
         <div class="mb-2">
-        <input type="text" class="form-control" v-model="post.datumNarodenia">
+        <input type="text" class="form-control" v-model="post.dateOfBirth">
         </div>
         <th> Dátum nastupu</th>
         <div class="mb-2">
-          <input type="text" class="form-control" v-model="post.datumNastupu">
+          <input type="text" class="form-control" v-model="post.dateOfEntry">
         </div>
         <th>Pozícia</th>
         <div class="input-group mb-3">
-            <select class="form-select" v-model="post.poziciaId" required>
+            <select class="form-select" v-model="post.positionId" required>
             <option value="" selected disabled hidden>Pozícia</option>
-            <option v-for="(poz, index) in pozicie" :key="index" placeholder="Pozície" :value="poz.poziciaId">
-              {{(pozicie, index, poz.nazovPozicie)}}</option>
+            <option v-for="(pos, index) in positions" :key="index" placeholder="Pozície" :value="pos.positionId">
+              {{(positions, index, pos.positionId)}}</option>
           </select>
         </div>
 
@@ -52,10 +52,10 @@
 
 
         <tbody>
-          <tr v-for="(poz, index) in predoslePozicie" v-bind:key="index">
-            <td>{{ poz.pozicie.nazovPozicie }}</td>
-            <td>{{ poz.datumNastupu }}</td>
-            <td>{{ poz.datumUkoncenia }}</td>
+          <tr v-for="(poz, index) in lastPositions" v-bind:key="index">
+            <td>{{ poz.position.positionName }}</td>
+            <td>{{ poz.dateOfEntry }}</td>
+            <td>{{ poz.dateOfLeave }}</td>
           </tr>
         </tbody>
       </table>
@@ -71,20 +71,20 @@
 
 import { defineComponent, PropType, ref } from 'vue';
 
-import api from '../services/Zamestnanec';
-import poz from '../services/Pozicie';
-import predosle from '../services/Predosle';
-import zamestnanci from '../Types/Zamestnanci';
-import ResponseData from '../Types/ResponseData';
-import Ipredosle from '../Types/Predosle';
-import IPozicie from '../Types/Pozicie';
+import EmployeeRepository from '../Repository/EmployeesRepository';
+import PositionsRepository from '../Repository/PositionsRepository';
+import LastPositionsRepository from '../Repository/LastPositionsRepository';
+import Employees from '../Models/IEmployees';
+import ResponseData from '../Models/IResponseData';
+import LastPositions from '../Models/ILastPositions';
+import Positions from '../Models/IPositions';
 
 
 
 export default defineComponent({
   name: "Modal_edit",
   updated(){
-  this.GetPredosle(this.$props.zamestnanec.zamestnanecId);
+  this.GetLastPositions(this.$props.employee.employeeId);
   
   
   },
@@ -92,40 +92,32 @@ export default defineComponent({
   this.GetId();
   },
   mounted(){
-      this.getPozicie();
+      this.getPositions();
   },
 
   data() {
 
     return {
 
-  predoslePozicie: [] as Ipredosle[],
-  pozicie: [] as IPozicie[],
+  lastPositions: [] as LastPositions[],
+  positions: [] as Positions[],
 
-  Zamestnanec: {} as zamestnanci,
-  post: {
-    zamestnanecId: "",
-    meno: "",
-    priezvisko: "",
-    adresa: "",
-    datumNarodenia: "",
-    datumNastupu: "",
-    poziciaId:"",
-  },
+  Employee: {} as Employees,
+  post: {} as Employees
 };
   },
 
   props: {
-    zamestnanec: {
+    employee: {
       required: true,
-      type: Object as PropType<zamestnanci>
+      type: Object as PropType<Employees>
     }
 
   },
 
   watch: {
     
-    zamestnanec: function (newVal, oldVal) {
+    employee: function (newVal, oldVal) {
       console.log('Prop changed: ', newVal, ' | was: ', oldVal)
     }
   },
@@ -137,10 +129,10 @@ export default defineComponent({
        refresh(){
         this.$emit("refresh");
       },
-     GetPredosle(id: number) {
+     GetLastPositions(id: number) {
 
-        predosle.getAll(id).then((response: ResponseData) => {
-        this.predoslePozicie = response.data;
+        LastPositionsRepository.getAll(id).then((response: ResponseData) => {
+        this.lastPositions = response.data;
 
         console.log(response.data);
       }).catch((e: Error) => {
@@ -149,7 +141,7 @@ export default defineComponent({
     },
 
     GetId(){
-      api.getId(this.zamestnanec.zamestnanecId).then((response: ResponseData) => {
+      EmployeeRepository.getId(this.employee.employeeId).then((response: ResponseData) => {
         this.post = response.data;
         console.log(response.data);
       }).catch((e: Error) => {
@@ -159,15 +151,15 @@ export default defineComponent({
 
 
     Edit() {
-      api.Edit(this.post.zamestnanecId, this.post).then((response: ResponseData) => {
+      EmployeeRepository.Edit(this.post.employeeId, this.post).then((response: ResponseData) => {
         console.log(response.data);
         this.refresh();
       }).catch((e: Error) => { console.log(e); });
     },
 
-    getPozicie() {
-      poz.getAll().then((response: ResponseData) => {
-        this.pozicie = response.data;
+    getPositions() {
+      PositionsRepository.getAll().then((response: ResponseData) => {
+        this.positions = response.data;
         console.log(response.data);
       }).catch((e: Error) => {
         console.log(e);

@@ -2,21 +2,20 @@
   <div class="container col-5">
     <br><br><br><br>
     <div class="Pozicie">
-      <button v-b-modal="'poziciaPost'" class="btn btn-secondary btn-square-md float-end">Vytvorit pozíciu</button>
+      <button v-b-modal="'poziciaPost'" class="btn btn-secondary btn-square-md float-end">Create position</button>
       <table class="table">
         <thead class="thead-light">
           <tr>
-            <th scope="col">Názov pozície</th>
+            <th scope="col">Position name</th>
           </tr>
         </thead>
         <tbody>
-          <tr v-for="poz in pozicie" :key="poz.poziciaId">
-            <td>{{ poz.nazovPozicie }}</td>
+          <tr v-for="position in positions" :key="position.positionId">
+            <td>{{ position.positionName }}</td>
 
             <th></th>
-            <td><button type="button" class="btn btn-danger" v-on:click="Delete(poz.poziciaId)">Zmazať</button></td>
+            <td><button type="button" class="btn btn-danger" v-on:click="Delete(position.positionId)">Delete</button></td>
           </tr>
-
         </tbody>
       </table>
     </div>
@@ -26,9 +25,9 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import Pozicie from '../Types/Pozicie';
-import ResponseData from "../Types/ResponseData";
-import pozicie from "../services/Pozicie";
+import Positions from '../Models/IPositions';
+import ResponseData from "../Models/IResponseData";
+import PositionsRepository from "../Repository/PositionsRepository";
 import Modal_Pozicia from '../modal/Modal-Pozicia.vue';
 
 
@@ -40,7 +39,7 @@ export default defineComponent({
   //popup
   data() {
     return {
-      pozicie: [] as Pozicie[],
+      positions: [] as Positions[],
     };
   },
 
@@ -49,20 +48,20 @@ export default defineComponent({
 
     // GET ALL
     Get() {
-      pozicie.getAll().then((response: ResponseData) => {
-        this.pozicie = response.data;
+      PositionsRepository.getAll().then((response: ResponseData) => {
+        this.positions = response.data;
         console.log(response.data);
       })
         .catch((e: Error) => {
-          confirm("Server nie je zapnuty");
+          confirm("Server is offline");
           console.log(e);
         });
     },
 
 
-    Delete(poziciaId: number) {
+    Delete(positionId: number) {
       if (confirm("Chcete určite trvalo zmazať poziciu ?")) {
-        pozicie.delete(poziciaId).then((response: ResponseData) => {
+        PositionsRepository.delete(positionId).then((response: ResponseData) => {
           console.log(response.data);
           this.Get();
         }).catch((e: Error) => {
