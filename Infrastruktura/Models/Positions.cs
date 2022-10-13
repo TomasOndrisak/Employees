@@ -5,14 +5,14 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Infrastruktura.Models
 {
-    public partial class Pozicie
+    public partial class Positions
     {
         [Required]
       
-        public int PoziciaId { get; set; }
+        public int PositionId { get; set; }
         
         [Required]
-        public string NazovPozicie { get; set; }
+        public string PositionName { get; set; }
         
       
         

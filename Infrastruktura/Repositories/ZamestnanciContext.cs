@@ -6,94 +6,94 @@ using Infrastruktura.Models;
 
 namespace Infrastruktura.Repositories
 {
-    public partial class ZamestnanciContext : DbContext
+    public partial class EmployeesDbContext : DbContext
     {
 
 
-        public ZamestnanciContext(DbContextOptions<ZamestnanciContext> options)
+        public EmployeesDbContext(DbContextOptions<EmployeesDbContext> options)
             : base(options)
         {
         }
 
-        public virtual DbSet<Pozicie> Pozicie { get; set; }
-        public virtual DbSet<PredoslePozicie> Predoslepozicie { get; set; }
-        public virtual DbSet<Zamestnanci> Zamestnanci { get; set; }
+        public virtual DbSet<Positions> Positions { get; set; }
+        public virtual DbSet<LastPositions> LastPositions { get; set; }
+        public virtual DbSet<Employees> Employees { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
 
         modelBuilder.HasAnnotation("Relational:Collation", "Latin1_General_CI_AS");
 
-        modelBuilder.Entity<Pozicie>(entity =>
+        modelBuilder.Entity<Positions>(entity =>
         {
 
-        entity.ToTable("Pozicie");
-        entity.HasKey(e => e.PoziciaId);
+        entity.ToTable("Positions");
+        entity.HasKey(e => e.PositionId);
                
-        entity.Property(e => e.NazovPozicie)
+        entity.Property(e => e.PositionName)
             .HasMaxLength(255)
             .IsUnicode(false);
 
-        entity.Property(e => e.PoziciaId).HasColumnName("PoziciaID");
+        entity.Property(e => e.PositionId).HasColumnName("PositionId");
         });
 
-        modelBuilder.Entity<PredoslePozicie>(entity =>
+        modelBuilder.Entity<LastPositions>(entity =>
         {
 
-        entity.HasKey(e => e.IDPredoslej);
+        entity.HasKey(e => e.LastPositionId);
 
-        entity.ToTable("PredoslePozicie");
+        entity.ToTable("LastPositions");
 
-        entity.HasOne(e => e.Pozicie)
+        entity.HasOne(e => e.Positions)
                 .WithMany()
-                .HasForeignKey(x => x.PoziciaId);
+                .HasForeignKey(x => x.PositionId);
 
-        entity.Property(e => e.DatumNastupu)
+        entity.Property(e => e.DateOfEntry)
             .HasColumnType("date")
-            .HasColumnName("datumNastupu");
+            .HasColumnName("dateOfEntry");
 
-        entity.Property(e => e.DatumUkoncenia)
+        entity.Property(e => e.DateOfLeave)
             .HasColumnType("date")
-            .HasColumnName("datumUkoncenia");
+            .HasColumnName("dateOfLeave");
 
-        entity.Property(e => e.PoziciaId).HasColumnName("poziciaId");
+        entity.Property(e => e.PositionId).HasColumnName("positionId");
 
-        entity.Property(e => e.ZamestnanecId).HasColumnName("ZamestnanecId");
+        entity.Property(e => e.EmployeeId).HasColumnName("employeeId");
 
         });
 
-            modelBuilder.Entity<Zamestnanci>(entity =>
+            modelBuilder.Entity<Employees>(entity =>
             {
 
 
-            entity.HasKey(e => e.ZamestnanecId);
+            entity.HasKey(e => e.EmployeeId);
 
-            entity.HasOne(e => e.Pozicie)
+            entity.HasOne(e => e.Positions)
                 .WithMany()
-                .HasForeignKey(x => x.PoziciaId);
+                .HasForeignKey(x => x.PositionId);
                 
-                entity.Property(e => e.Adresa)
+                entity.Property(e => e.Adress)
                     .HasMaxLength(255)
                     .IsUnicode(false)
-                    .HasColumnName("adresa");
+                    .HasColumnName("adress");
 
-                entity.Property(e => e.Archivovany).HasColumnName("archivovany");
+                entity.Property(e => e.Archived).HasColumnName("archived");
 
-                entity.Property(e => e.DatumNarodenia).HasColumnType("date");
+                entity.Property(e => e.DateOfBirth).HasColumnType("date");
 
-                entity.Property(e => e.DatumNastupu).HasColumnType("date");
+                entity.Property(e => e.DateOfEntry).HasColumnType("date");
 
-                entity.Property(e => e.PoziciaId).HasColumnName("PoziciaId");
+                entity.Property(e => e.PositionId).HasColumnName("positionId");
 
-                entity.Property(e => e.Meno)
+                entity.Property(e => e.Name)
                     .HasMaxLength(255)
                     .IsUnicode(false);
 
-                entity.Property(e => e.Priezvisko)
+                entity.Property(e => e.LastName)
                     .HasMaxLength(255)
                     .IsUnicode(false);
 
-                entity.Property(e => e.ZamestnanecId).HasColumnName("ZamestnanecID");
+                entity.Property(e => e.EmployeeId).HasColumnName("EmployeeId");
             });
               
             OnModelCreatingPartial(modelBuilder);

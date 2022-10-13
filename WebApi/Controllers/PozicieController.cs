@@ -15,46 +15,46 @@ namespace WebApi.Controllers
     [ApiController]
     public class PozicieController : ControllerBase
     {
-        private readonly PozicieService _context;
+        private readonly PositionsService _context;
 
-        public PozicieController(PozicieService context)
+        public PozicieController(PositionsService context)
         {
             _context = context;
         }
 
         // GET: api/Pozicie
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Pozicie>>> GetPozicie()
+        public async Task<ActionResult<IEnumerable<Positions>>> GetPozicie()
         {
-            var get = await _context.GetPozicieService();
+            var get = await _context.GetPositionsService();
             return Ok(get);
         }
         
         [HttpGet("{id}")]
-        public async Task<ActionResult<Pozicie>> GetPozicie(int id)
+        public async Task<ActionResult<Positions>> GetPozicie(int id)
         {
-            var getId = await _context.GetPozicieService(id);
+            var getId = await _context.GetPositionsService(id);
             return Ok(getId);
         }
 
         [HttpPut("{id}")]
-        public async Task PutPozicie(int id, Pozicie pozicie)
+        public async Task PutPozicie(int id, Positions pozicie)
         {
-            await _context.PutPozicieService(id, pozicie);
+            await _context.PutPositionsService(id, pozicie);
            
         }
 
         [HttpPost]
-        public async Task PostPozicie(Pozicie pozicie)
+        public async Task PostPozicie(Positions pozicie)
         {
-           await _context.PostPozicieService(pozicie);
+           await _context.PostPositionsService(pozicie);
             
         }
 
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeletePozicie(int id)
         {
-            await _context.DeletePozicieService(id);
+            await _context.DeletePositionsService(id);
             return Ok(id);
            
                   

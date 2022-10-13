@@ -15,18 +15,18 @@ namespace WebApi.Controllers
     [ApiController]
     public class PredoslepozicieController : ControllerBase
     {
-        private readonly PredoslePozicieService _context;
+        private readonly LastPositionsService _context;
 
-        public PredoslepozicieController(PredoslePozicieService context)
+        public PredoslepozicieController(LastPositionsService context)
         {
             _context = context;
         }
 
         // GET: api/Predoslepozicie
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<PredoslePozicie>>> GetPredoslepozicie()
+        public async Task<ActionResult<IEnumerable<LastPositions>>> GetPredoslepozicie()
         {
-            var get = await _context.GetPredoslePozicieServ();
+            var get = await _context.GetLastPositionsService();
            
             return Ok(get);
 
@@ -34,9 +34,9 @@ namespace WebApi.Controllers
 
         // GET: api/Predoslepozicie/5
         [HttpGet("{idZamestnanca}")]
-        public async Task<ActionResult<IEnumerable<PredoslePozicie>>> GetId(int idZamestnanca)
+        public async Task<ActionResult<IEnumerable<LastPositions>>> GetId(int idZamestnanca)
         {
-            var Predoslepozicie = await _context.GetPredoslePozicieServ(idZamestnanca);
+            var Predoslepozicie = await _context.GetLastPositionsByIdService(idZamestnanca);
 
             return Ok(Predoslepozicie);
 
@@ -48,9 +48,9 @@ namespace WebApi.Controllers
         // PUT: api/Predoslepozicie/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task PutPredoslepozicieControler(int id, PredoslePozicie Predoslepozicie)
+        public async Task PutPredoslepozicieControler(int id, LastPositions Predoslepozicie)
         {
-            await _context.PutPredoslePozicieServ(id, Predoslepozicie);
+            await _context.PutLastPositionsService(id, Predoslepozicie);
 
             
         }
@@ -58,9 +58,9 @@ namespace WebApi.Controllers
         // POST: api/Predoslepozicie
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task PostPredoslepozicie(PredoslePozicie Predoslepozicie)
+        public async Task PostPredoslepozicie(LastPositions Predoslepozicie)
         {
-            await _context.PostPredoslePozicieServ(Predoslepozicie);
+            await _context.PostLastPositionsService(Predoslepozicie);
 
         }
         
@@ -69,7 +69,7 @@ namespace WebApi.Controllers
         [HttpDelete("{id}")]
         public async Task DeletePredoslepozicie(int id)
         {
-            await _context.DeletePredoslePozicieServ(id);
+            await _context.DeleteLastPositionsService(id);
 
             
         }

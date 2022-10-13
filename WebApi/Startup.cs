@@ -29,7 +29,7 @@ namespace WebApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<ZamestnanciContext>(options =>
+            services.AddDbContext<EmployeesDbContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"), b => b.MigrationsAssembly("WebApi")));
 
 
@@ -43,16 +43,16 @@ namespace WebApi
             
             services.AddControllers().AddNewtonsoftJson(options =>
             options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+            
             // services
-            // zamestnanec service
-            services.AddScoped<ZamestnanecService>();
-            services.AddScoped<ZamestnanecRepository>();
-            // PredoslePozicie service
-            services.AddScoped<PredoslePozicieService>();
-            services.AddScoped<PredoslepozicieRepository>();
-            // PozicieService
-            services.AddScoped<PozicieService>();
-            services.AddScoped<PozicieRepository>();
+            services.AddScoped<EmployeeService>();
+            services.AddScoped<EmployeeRepository>();
+
+            services.AddScoped<LastPositionsService>();
+            services.AddScoped<LastPositionsRepository>();
+
+            services.AddScoped<PositionsService>();
+            services.AddScoped<PositionsRepository>();
 
             //allowing cors
             services.AddCors(option =>
