@@ -35,7 +35,7 @@
   </b-modal>
 </template>
 <script lang="ts">
-import { defineComponent, PropType } from "vue";
+import { defineComponent } from "vue";
 import api from "../Repository/PositionsRepository";
 import ResponseData from "../Models/IResponseData";
 

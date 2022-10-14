@@ -33,7 +33,7 @@
       </table>
     </div>
   </div>
-  <Modal_Pozicia @refresh="Get"/>
+  <Modal_Position @refresh="Get"/>
 </template>
 
 <script lang="ts">
@@ -41,11 +41,11 @@ import { defineComponent } from "vue";
 import Positions from "../Models/IPositions";
 import ResponseData from "../Models/IResponseData";
 import PositionsRepository from "../Repository/PositionsRepository";
-import Modal_Pozicia from "../modal/Modal-Pozicia.vue";
+import Modal_Position from "../modal/Modal-Position.vue";
 
 export default defineComponent({
   components: {
-    Modal_Pozicia,
+    Modal_Position: Modal_Position,
   },
 
   data() {

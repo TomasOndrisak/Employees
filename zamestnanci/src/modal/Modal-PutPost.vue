@@ -90,8 +90,7 @@
   </b-modal>
 </template>
 <script lang="ts">
-import { defineComponent, PropType } from "vue";
-import Employees from "../Models/IEmployees";
+import { defineComponent } from "vue";
 import Positions from "../Models/IPositions";
 import EmployeeRepository from "../Repository/EmployeesRepository";
 import PositionsRepository from "../Repository/PositionsRepository";
