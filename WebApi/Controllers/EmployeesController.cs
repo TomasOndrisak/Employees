@@ -1,12 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Infrastruktura.Models;
-using Infrastruktura.Repositories;
 using Application.Services;
 namespace WebApi.Controllers
 {
@@ -71,7 +67,7 @@ namespace WebApi.Controllers
         }
 
         [HttpPut("/archive/{id}")]
-        public async Task<ActionResult<Employees>> Archive(int id, Employees employees)
+        public async Task<ActionResult<Employees>> Archivuj(int id, Employees employees)
         {
             await _context.Archive(id, employees);
             return Ok();
