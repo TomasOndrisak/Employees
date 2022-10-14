@@ -8,12 +8,12 @@
           >
         </li>
         <li class="nav-item">
-          <router-link class="nav-link" to="/archivovany"
+          <router-link class="nav-link" to="/archived"
             >Archived employees</router-link
           >
         </li>
         <li class="nav-item">
-          <router-link class="nav-link" to="/Pozicie"
+          <router-link class="nav-link" to="/positions"
             >| Positions</router-link
           >
         </li>

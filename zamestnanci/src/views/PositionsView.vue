@@ -33,7 +33,7 @@
       </table>
     </div>
   </div>
-  <Modal_Pozicia @refresh="Get"></Modal_Pozicia>
+  <Modal_Pozicia @refresh="Get"/>
 </template>
 
 <script lang="ts">
@@ -47,7 +47,7 @@ export default defineComponent({
   components: {
     Modal_Pozicia,
   },
-  //popup
+
   data() {
     return {
       positions: [] as Positions[],
@@ -55,7 +55,6 @@ export default defineComponent({
   },
 
   methods: {
-    // GET ALL
     Get() {
       PositionsRepository.getAll()
         .then((response: ResponseData) => {

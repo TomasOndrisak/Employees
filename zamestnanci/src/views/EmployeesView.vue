@@ -77,7 +77,6 @@ export default defineComponent({
     };
   },
   methods: {
-    // GET ALL
     Get() {
       EmployeeRepository.getAll()
         .then((response: ResponseData) => {
@@ -91,10 +90,9 @@ export default defineComponent({
     },
 
     SetEmployee(id: number) {
-      this.employee = this.employees.find(emp => emp.employeeId === id);
+      this.employee = this.employees.find((emp) => emp.employeeId === id);
     },
 
-    // GET ID
     async GetId(id: any) {
       await EmployeeRepository.getId(id)
         .then((response: ResponseData) => {
@@ -120,7 +118,7 @@ export default defineComponent({
             );
           })
           .catch((e: Error) => {
-            console.log(e);
+            return console.log(e);
           });
       } else if (confirm("Do you want to permanently delete the employee?")) {
         EmployeeRepository.delete(employeeId)

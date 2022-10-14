@@ -33,7 +33,7 @@
     </table>
   </div>
 
-  <Modal_pop :Employees="employees"> </Modal_pop>
+  <Modal_pop :Employees="employees"/>
 </template>
 
 <script lang="ts">
@@ -49,14 +49,12 @@ export default defineComponent({
   components: {
     Modal_pop,
   },
-  //popup
   data() {
     return {
       employees: [] as Employees[],
     };
   },
   methods: {
-    // GET ALL
     Get() {
       EmployeesRepository.getArchived()
         .then((response: ResponseData) => {
@@ -68,7 +66,6 @@ export default defineComponent({
           console.log(e);
         });
     },
-    // GET ID
     GetId(id: any) {
       EmployeesRepository.getId(id)
         .then((response: ResponseData) => {
@@ -95,6 +92,7 @@ export default defineComponent({
       }
     },
   },
+
   mounted() {
     this.Get();
   },

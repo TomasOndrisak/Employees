@@ -1,22 +1,22 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
-import ZamestnanciView from '../views/ZamestnanciView.vue'
-import PozicieView from '../views/PozicieView.vue'
-import ArchivovanyViewVue from '../views/ArchivovanyView.vue'
+import EmployeesView from '../views/EmployeesView.vue'
+import PositionsView from '../views/PositionsView.vue'
+import ArchivedEmployeesViewVue from '../views/ArchivedEmployeesView.vue'
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
-    name: 'zamestnanci',
-    component: ZamestnanciView
+    name: 'employees',
+    component: EmployeesView
   },
    {
-     path: '/Pozicie',
-     name: 'pozicie',
-     component: PozicieView
+     path: '/positions',
+     name: 'positions',
+     component: PositionsView
   },
   {
-    path: '/Archivovany',
-    name: 'archivovany',
-    component: ArchivovanyViewVue
+    path: '/archived',
+    name: 'archived',
+    component: ArchivedEmployeesViewVue
   },
 ]
 

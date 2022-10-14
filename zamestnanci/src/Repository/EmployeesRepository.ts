@@ -6,6 +6,7 @@ class EmployeesRepository {
   getAll(): Promise<any> {
     return http.get("api/employees/archived/false");
   }
+  
   getArchived(): Promise<any> {
     return http.get("api/employees/archived/true");
   }
